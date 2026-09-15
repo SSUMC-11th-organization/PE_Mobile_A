@@ -6,7 +6,7 @@ SSUMC 11기 Mobile 스터디 A조
 
 | 뭉크 | 엘시 | 여비 | 돌돌 |
 | :---: | :---: | :---: | :---: |
-| 강병민 | [이찬형](https://github.com/lclee0520) | [김도엽](https://github.com/Yeopdo) | [최서정](https://github.com/bum22) |
+| [강병민](https://github.com/ByungMMin) | [이찬형](https://github.com/lclee0520) | [김도엽](https://github.com/Yeopdo) | [최서정](https://github.com/bum22) |
 
 <br/>
 

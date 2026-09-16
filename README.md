@@ -31,12 +31,23 @@ SSUMC 11기 Mobile 스터디 A조
 
 ## 📂 디렉터리 규칙
 
+닉네임 폴더 하나가 `flutter create`로 만든 Flutter 프로젝트 루트입니다. 매주 작업은 주차별 폴더를 새로 만들지 않고 자신의 프로젝트에 이어서 쌓습니다.
+
 ```bash
-├─닉네임
-    ├─Week1
-    │  └─미션이름
-    ├─Week2
-    │  └─Week2_Mission
+├─.github
+│  ├─ISSUE_TEMPLATE
+│  └─PULL_REQUEST_TEMPLATE.md
+├─.gitignore
+├─README.md
+└─닉네임
+    ├─lib
+    │  ├─main.dart
+    │  └─...
+    ├─test
+    ├─assets
+    ├─android
+    ├─ios
+    └─pubspec.yaml
 ```
 
 <br/>
@@ -71,8 +82,13 @@ SSUMC 11기 Mobile 스터디 A조
    - 아래 구조에 맞게 브랜치를 생성하고 작업합니다.
    - **구조:** `닉네임/main` → `닉네임/#이슈번호`
 
-4. **빌드 확인**
-   - PR 올리기 전 프로젝트가 정상적으로 빌드·실행되는지 확인합니다.
+4. **포맷 & 분석 체크**
+   - PR 올리기 전 자신의 프로젝트 폴더에서 아래 명령어를 순서대로 실행합니다.
+   ```bash
+   dart format .    # 코드 포맷 자동 정리
+   flutter analyze  # 정적 분석
+   flutter test     # 테스트 실행
+   ```
 
 5. **PR 올리기**
    - PR 템플릿에 맞게 작성하여 아래 방향으로 PR을 올립니다.

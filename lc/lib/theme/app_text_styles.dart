@@ -13,6 +13,14 @@ class AppTextStyles {
     letterSpacing: 0,
   );
 
+  static const TextStyle labelSmall = TextStyle(
+    fontFamily: 'Manrope',
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    height: 20 / 14,
+    letterSpacing: 0.25,
+  );
+
   static const TextStyle titleLarge = TextStyle(
     fontFamily: 'Manrope',
     fontSize: 32,

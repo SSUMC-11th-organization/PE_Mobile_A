@@ -11,13 +11,14 @@ class StatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.violetback,
-        border: Border.all(color: AppColors.violet),
+        border: Border.all(color: AppColors.violetBorder),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             label,
@@ -27,7 +28,7 @@ class StatItem extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w500,
               height: 16 / 12,
-              letterSpacing: 0,
+              color: AppColors.textSecondary,
             ),
           ),
           const SizedBox(height: 8),

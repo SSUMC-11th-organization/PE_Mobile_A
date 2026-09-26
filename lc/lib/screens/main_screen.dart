@@ -15,9 +15,9 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 홈 화면에서는 뒤로 가기가 동작하지 않는다.
+    // 홈 탭(index 0)에서만 뒤로 가기가 동작하지 않는다.
     return PopScope(
-      canPop: false,
+      canPop: currentIndex != 0,
       child: Scaffold(
         body: child,
         bottomNavigationBar: DecoratedBox(

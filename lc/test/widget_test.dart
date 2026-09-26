@@ -2,16 +2,97 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:movielog/main.dart';
+import 'package:movielog/models/movie.dart';
+import 'package:movielog/router/app_router.dart';
+import 'package:movielog/widgets/hero_banner.dart';
+import 'package:movielog/widgets/movie_card.dart';
+
+void useTallScreen(WidgetTester tester) {
+  tester.view.physicalSize = const Size(800, 2600);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+}
 
 void main() {
-  testWidgets('ProfileScreen shows nickname, stats and edit button', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('시작하기를 누르면 회원가입 화면으로 이동한다', (tester) async {
+    useTallScreen(tester);
     await tester.pumpWidget(const MovieLogApp());
+    expect(find.text('시작하기'), findsOneWidget);
 
-    expect(find.text('내 프로필'), findsOneWidget);
-    expect(find.text('무비러버'), findsOneWidget);
-    expect(find.text('본 영화'), findsOneWidget);
-    expect(find.byType(OutlinedButton), findsOneWidget);
+    await tester.tap(find.text('시작하기'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('가입하기'), findsOneWidget);
+  });
+
+  testWidgets('홈 영화 카드를 누르면 상세로 이동하고 뒤로 돌아온다', (tester) async {
+    useTallScreen(tester);
+    await tester.pumpWidget(const MovieLogApp());
+    AppRouter.router.go('/home');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(HeroBanner));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Cinema Archive'), findsOneWidget);
+    expect(find.text(movies.first.title), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HeroBanner), findsOneWidget);
+  });
+
+  testWidgets('장르 필터 BottomSheet는 확인을 눌러야 목록에 적용된다', (tester) async {
+    useTallScreen(tester);
+    await tester.pumpWidget(const MovieLogApp());
+    AppRouter.router.go('/movies');
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MovieCard), findsNWidgets(movies.length));
+
+    await tester.tap(find.byIcon(Icons.filter_list));
+    await tester.pumpAndSettle();
+    expect(find.text('장르 필터'), findsOneWidget);
+
+    await tester.tap(find.text('드라마'));
+    await tester.pumpAndSettle();
+    // 확인 전에는 목록이 바뀌지 않는다.
+    expect(find.byType(MovieCard), findsNWidgets(movies.length));
+
+    await tester.tap(find.text('확인'));
+    await tester.pumpAndSettle();
+    expect(find.text('장르 필터'), findsNothing);
+    expect(
+      find.byType(MovieCard),
+      findsNWidgets(
+        movies.where((movie) => movie.matchesAnyGenre({'드라마'})).length,
+      ),
+    );
+
+    // 선택을 모두 해제하고 확인하면 전체 목록이 다시 보인다.
+    await tester.tap(find.byIcon(Icons.filter_list));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('드라마'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('확인'));
+    await tester.pumpAndSettle();
+    expect(find.byType(MovieCard), findsNWidgets(movies.length));
+  });
+
+  testWidgets('상세에서 평점 Dialog와 즐겨찾기 Snackbar가 동작한다', (tester) async {
+    useTallScreen(tester);
+    await tester.pumpWidget(const MovieLogApp());
+    AppRouter.router.go('/movies/1');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.bookmark_border));
+    await tester.pump();
+    expect(find.text('즐겨찾기에 추가했습니다.'), findsOneWidget);
+    expect(find.byIcon(Icons.bookmark), findsOneWidget);
+
+    await tester.tap(find.text('평점 남기기'));
+    await tester.pumpAndSettle();
+    expect(find.text('영화는 어떠셨나요?'), findsOneWidget);
   });
 }

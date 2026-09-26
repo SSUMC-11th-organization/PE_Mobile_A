@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -59,12 +60,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _submit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     FocusScope.of(context).unfocus();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('회원가입이 완료되었습니다.')));
+    context.go('/home');
   }
 
   @override
   Widget build(BuildContext context) {
+    // 회원가입 화면에서는 뒤로 가기가 동작하지 않는다.
+    return PopScope(canPop: false, child: _buildScaffold());
+  }
+
+  Widget _buildScaffold() {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= _wideBreakpoint;
@@ -72,11 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return Scaffold(
           appBar: isWide
               ? null
-              : const CommonAppBar(
-                  title: '회원가입',
-                  centerTitle: true,
-                  showBackButton: true,
-                ),
+              : const CommonAppBar(title: '회원가입', centerTitle: true),
           body: SafeArea(
             child: LayoutBuilder(
               builder: (context, body) => SingleChildScrollView(

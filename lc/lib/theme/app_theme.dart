@@ -17,7 +17,9 @@ class AppTheme {
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.warmWhite,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
+        scrolledUnderElevation: 0,
         titleTextStyle: TextStyle(
           fontFamily: 'Manrope',
           color: AppColors.violet,
@@ -27,9 +29,30 @@ class AppTheme {
           letterSpacing: 0,
         ),
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        height: 80,
+        backgroundColor: AppColors.warmWhite,
+        indicatorColor: AppColors.violetpink,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            height: 16 / 12,
+            color: states.contains(WidgetState.selected)
+                ? AppColors.navLabelSelected
+                : AppColors.textSecondary,
+          ),
+        ),
+        iconTheme: const WidgetStatePropertyAll(
+          IconThemeData(color: AppColors.textSecondary),
+        ),
+      ),
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.violetpink,
-        side: const BorderSide(color: AppColors.violet, width: 1.5),
+        side: BorderSide.none,
         labelStyle: const TextStyle(
           fontFamily: 'Manrope',
           color: AppColors.violetDark,
@@ -38,7 +61,7 @@ class AppTheme {
           height: 16 / 12,
           letterSpacing: 0,
         ),
-        labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+        labelPadding: EdgeInsets.zero,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: const StadiumBorder(),
         elevation: 0,

@@ -38,8 +38,6 @@ class _MovieLogTextFormFieldState extends State<MovieLogTextFormField> {
   @override
   void initState() {
     super.initState();
-    // 이 화면(Form)의 다른 위젯이 아니라, 이 필드 자신의 상태 아이콘만
-    // 다시 그리면 되기 때문에 setState 대신 Controller listener를 사용합니다.
     widget.controller.addListener(_handleTextChanged);
   }
 

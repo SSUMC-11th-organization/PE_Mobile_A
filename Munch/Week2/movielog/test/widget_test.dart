@@ -13,9 +13,7 @@ void main() {
     expect(submitButton.onPressed, isNull);
   });
 
-  testWidgets('형식이 잘못된 입력에는 한국어 오류 메시지가 표시된다', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('형식이 잘못된 입력에는 한국어 오류 메시지가 표시된다', (WidgetTester tester) async {
     await tester.pumpWidget(const MovieLogApp());
 
     await tester.enterText(find.byType(TextFormField).at(0), 'a');
@@ -33,9 +31,7 @@ void main() {
     expect(submitButton.onPressed, isNull);
   });
 
-  testWidgets('모든 입력이 유효하면 가입 버튼이 활성화되고 제출된다', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('모든 입력이 유효하면 가입 버튼이 활성화되고 제출된다', (WidgetTester tester) async {
     await tester.pumpWidget(const MovieLogApp());
 
     await tester.enterText(find.byType(TextFormField).at(0), '무비러버');
@@ -68,9 +64,7 @@ void main() {
     await tester.binding.setSurfaceSize(null);
   });
 
-  testWidgets('넓은 화면에서 Form의 최대 너비가 560으로 제한된다', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('넓은 화면에서 Form의 최대 너비가 560으로 제한된다', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(1024, 800));
     await tester.pumpWidget(const MovieLogApp());
     await tester.pump();

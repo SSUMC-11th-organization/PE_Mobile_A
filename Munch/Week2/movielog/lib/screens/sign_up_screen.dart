@@ -27,8 +27,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    // 세 입력값 중 하나라도 바뀌면 가입 버튼의 활성화 여부를 다시 계산해야 하므로
-    // 각 Controller에 리스너를 달아 화면 전체를 다시 그립니다.
     _nicknameController.addListener(_handleFormChanged);
     _emailController.addListener(_handleFormChanged);
     _passwordController.addListener(_handleFormChanged);

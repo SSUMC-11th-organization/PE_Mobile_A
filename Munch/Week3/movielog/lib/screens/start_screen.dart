@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -64,9 +65,7 @@ class StartScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 36),
               child: ElevatedButton(
-                onPressed: () {
-                  debugPrint('시작하기 버튼을 눌렀습니다.');
-                },
+                onPressed: () => context.go('/register'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6750A4),
                   foregroundColor: Colors.white,

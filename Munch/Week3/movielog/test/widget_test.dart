@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:movielog/movie_log_app.dart';
+import 'package:movielog/router/app_router.dart';
+
+// 앱은 시작 화면에서 출발하므로 회원가입 화면으로 이동한 뒤 테스트한다.
+Future<void> pumpSignUpScreen(WidgetTester tester) async {
+  await tester.pumpWidget(const MovieLogApp());
+  AppRouter.router.go('/register');
+  await tester.pumpAndSettle();
+}
 
 void main() {
   testWidgets('빈 값으로는 가입 버튼이 비활성화된다', (WidgetTester tester) async {
-    await tester.pumpWidget(const MovieLogApp());
+    await pumpSignUpScreen(tester);
 
     final submitButton = tester.widget<ElevatedButton>(
       find.widgetWithText(ElevatedButton, '가입하기'),
@@ -14,7 +22,7 @@ void main() {
   });
 
   testWidgets('형식이 잘못된 입력에는 한국어 오류 메시지가 표시된다', (WidgetTester tester) async {
-    await tester.pumpWidget(const MovieLogApp());
+    await pumpSignUpScreen(tester);
 
     await tester.enterText(find.byType(TextFormField).at(0), 'a');
     await tester.enterText(find.byType(TextFormField).at(1), 'test@');
@@ -32,7 +40,7 @@ void main() {
   });
 
   testWidgets('모든 입력이 유효하면 가입 버튼이 활성화되고 제출된다', (WidgetTester tester) async {
-    await tester.pumpWidget(const MovieLogApp());
+    await pumpSignUpScreen(tester);
 
     await tester.enterText(find.byType(TextFormField).at(0), '무비러버');
     await tester.enterText(
@@ -57,8 +65,7 @@ void main() {
     WidgetTester tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(360, 640));
-    await tester.pumpWidget(const MovieLogApp());
-    await tester.pump();
+    await pumpSignUpScreen(tester);
 
     expect(tester.takeException(), isNull);
     await tester.binding.setSurfaceSize(null);
@@ -66,8 +73,7 @@ void main() {
 
   testWidgets('넓은 화면에서 Form의 최대 너비가 560으로 제한된다', (WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(1024, 800));
-    await tester.pumpWidget(const MovieLogApp());
-    await tester.pump();
+    await pumpSignUpScreen(tester);
 
     final maxWidths = tester
         .widgetList<ConstrainedBox>(find.byType(ConstrainedBox))

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'theme/app_theme.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
-import 'screens/profile_screen.dart';
+
+import 'screens/sign_up_screen.dart';
 
 void main() {
   runApp(const MovieLogApp());
@@ -16,7 +19,7 @@ class MovieLogApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MovieLog',
       theme: AppTheme.light,
-      home: const ProfileScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
@@ -28,26 +31,24 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding( 
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
                 'assets/logos/movielog_logo.svg',
-                width : 96,
-                height : 96,
-                semanticsLabel : 'MovieLog 로고',),
+                width: 96,
+                height: 96,
+                semanticsLabel: 'MovieLog 로고',
+              ),
               const SizedBox(height: 24),
               const Text(
                 '영화의 순간을 기록하세요',
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               const Text(
@@ -55,10 +56,7 @@ class StartScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               const SizedBox(height: 40),
               ElevatedButton(

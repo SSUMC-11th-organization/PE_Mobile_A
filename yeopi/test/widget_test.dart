@@ -1,30 +1,42 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:movielog/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  ElevatedButton signUpButton(WidgetTester tester) => tester
+      .widget<ElevatedButton>(find.widgetWithText(ElevatedButton, '가입하기'));
+
+  testWidgets('모든 입력이 유효하고 약관에 동의해야 가입 버튼이 활성화된다', (tester) async {
     await tester.pumpWidget(const MovieLogApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(signUpButton(tester).onPressed, isNull);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), '무비러버');
+    await tester.enterText(fields.at(1), 'movie@movielog.com');
+    await tester.enterText(fields.at(2), 'password1');
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(signUpButton(tester).onPressed, isNull);
+
+    await tester.tap(find.byType(Checkbox));
+    await tester.pump();
+
+    expect(signUpButton(tester).onPressed, isNotNull);
+  });
+
+  testWidgets('잘못된 입력은 한국어 오류 메시지를 표시한다', (tester) async {
+    await tester.pumpWidget(const MovieLogApp());
+
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), '무');
+    await tester.enterText(fields.at(1), 'movie');
+    await tester.enterText(fields.at(2), '1234');
+    await tester.pump();
+
+    expect(find.text('닉네임은 두 글자 이상 입력해주세요.'), findsOneWidget);
+    expect(find.text('올바른 이메일 형식이 아닙니다.'), findsOneWidget);
+    expect(find.text('비밀번호는 8자 이상 입력해주세요.'), findsOneWidget);
   });
 }

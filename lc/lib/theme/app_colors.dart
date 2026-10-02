@@ -19,4 +19,13 @@ class AppColors {
   static const Color errorBackground = Color(0xFFFFDAD6);
   static const Color error = Color(0xFFB3261E);
   static const Color violetDisabled = Color(0xFFCCC2DC);
+  static const Color star = Color(0xFFFFB400);
+
+  static const Color surfaceVariant = Color(0xFFE6E0E9);
+  static const Color tagBackground = Color(0xFFE3E2DF);
+  static const Color violetBorder = Color(0xFFE9DDFF);
+  static const Color avatarBorder = Color(0xFFD0BCFF);
+  static const Color textDetail = Color(0xFF1B1C1A);
+  static const Color navLabelSelected = Color(0xFF686177);
+  static const Color upcomingBackground = Color(0xFFECE6EE);
 }
